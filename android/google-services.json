@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1055433314461",
+    "project_id": "duck-duck-goose-fc5cc",
+    "storage_bucket": "duck-duck-goose-fc5cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055433314461:android:724cb12c379a1b7dcc4474",
+        "android_client_info": {
+          "package_name": "com.duckduckgoose.game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSwOkan7vh7Fi9dlx4fs4qpQbao5zU2o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,8 @@
+plugins {
+    id("com.android.application")
+    id("com.google.gms.google-services")
+}
+
 android {
     namespace "com.duckduckgoose.game"
     buildToolsVersion "34.0.0"
@@ -31,7 +36,6 @@ android {
         }
     }
 }
-
 
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
