@@ -22,7 +22,7 @@ class ShopAdapter(val shopItems: ArrayList<String>,
 
         init {
             itemName = view.findViewById(R.id.item_name)
-            description = view.findViewById(R.id.description)
+            description = view.findViewById(R.id.item_desc)
             cost = view.findViewById(R.id.item_cost)
         }
     }
