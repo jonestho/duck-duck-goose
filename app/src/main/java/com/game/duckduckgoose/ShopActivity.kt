@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class ShopActivity : AppCompatActivity() {
@@ -23,18 +24,25 @@ class ShopActivity : AppCompatActivity() {
             insets
         }
 
-        /* TODO: Declare variable for game data to be passed and held in.
-            val data: HashMap<Item, Bool>? = intent.getParcelable(?)("name_here")
-         */
+
+        val data: HashMap<String, Boolean> = hashMapOf("Coffee" to true, "Fun Dip" to true,
+            "Farmers" to true)
+        val currencyAmount = 50
+
+        // TODO: Add the following later for the two variables above: intent.getParcelable(?)("name_here")
 
         recyclerView = findViewById<RecyclerView>(R.id.shop_items)
         myViewModel = ViewModelProvider(this).get(ShopViewModel::class.java)
+        myViewModel.loadData(data, currencyAmount)
 
-        // TODO: Call function to load data into ViewModel property and update store
+        recyclerView.adapter =
+            ShopAdapter(myViewModel.shopItems!!) { itemName: String, isSelected: Boolean -> }
 
-        // TODO: Set adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // TODO: Set layout manager
+        myViewModel.updateShop.observe(this){
+            // TODO: Disable the item that is bought.
+        }
 
         // buttons
         val doneBtn = findViewById<Button>(R.id.to_main)
