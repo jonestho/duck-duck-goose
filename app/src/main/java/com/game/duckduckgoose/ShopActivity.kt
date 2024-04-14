@@ -24,10 +24,7 @@ class ShopActivity : AppCompatActivity() {
             insets
         }
 
-
-        val data: ArrayList<Item> = arrayOf(Item("Goose", "Goose", 3)) as
-                ArrayList<Item>
-
+        val data: ArrayList<Item> = arrayListOf(Item("Goose", "Goose", 3))
         val currencyAmount = 50
 
         // TODO: Add the following later for the two variables above: intent.getParcelable(?)("name_here")

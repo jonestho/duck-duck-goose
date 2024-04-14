@@ -76,11 +76,18 @@ class LoginActivity : AppCompatActivity() {
 
         loginBtn.setOnClickListener{
             myViewModel.doLogin(email.text.toString(), password.text.toString())
+
+            val toShop = Intent(this, ShopActivity::class.java)
+            startActivity(toShop)
         }
 
         registerBtn.setOnClickListener{
-            val toRegister = Intent(this, NewAccountActivity::class.java)
-            startActivity(toRegister)
+            // TODO: Uncomment code below when done testing shop
+            val toShop = Intent(this, ShopActivity::class.java)
+            startActivity(toShop)
+
+            /* val toRegister = Intent(this, NewAccountActivity::class.java)
+            startActivity(toRegister) */
         }
     }
 }

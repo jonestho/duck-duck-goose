@@ -11,7 +11,7 @@
     app:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_cost"
+        android:id="@+id/item_listing"
         android:layout_width="match_parent"
         android:layout_height="67dp">
 
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/word"
+            android:id="@+id/item_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
