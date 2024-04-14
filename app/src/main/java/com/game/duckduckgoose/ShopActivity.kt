@@ -25,8 +25,9 @@ class ShopActivity : AppCompatActivity() {
         }
 
 
-        val data: HashMap<String, Boolean> = hashMapOf("Coffee" to true, "Fun Dip" to true,
-            "Farmers" to true)
+        val data: ArrayList<Item> = arrayOf(Item("Goose", "Goose", 3)) as
+                ArrayList<Item>
+
         val currencyAmount = 50
 
         // TODO: Add the following later for the two variables above: intent.getParcelable(?)("name_here")
@@ -36,7 +37,8 @@ class ShopActivity : AppCompatActivity() {
         myViewModel.loadData(data, currencyAmount)
 
         recyclerView.adapter =
-            ShopAdapter(myViewModel.shopItems!!) { itemName: String, isSelected: Boolean -> }
+            ShopAdapter(myViewModel.shopItems!!, myViewModel.currencyAmount)
+                { item: Item, isSelected: Boolean -> }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 

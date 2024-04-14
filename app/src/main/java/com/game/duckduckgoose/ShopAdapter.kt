@@ -9,13 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Change String to Item type or whatever is defined.
 
-class ShopAdapter(val shopItems: HashMap<String, Boolean>,
-                  val selectListener: (String, Boolean) -> Unit):
+class ShopAdapter(val shopItems: ArrayList<Item>, val userCurrency: Int,
+                  val selectListener: (Item, Boolean)-> Unit):
     RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
     private var selectedPos = RecyclerView.NO_POSITION
-    private var revealedHolder: RecyclerView.ViewHolder? = null
-
-    val shopItemsList = shopItems.entries.toList()
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val itemName: TextView
@@ -37,20 +34,17 @@ class ShopAdapter(val shopItems: HashMap<String, Boolean>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.isSelected = selectedPos == position
-        val item = shopItemsList[position]
+        val item = shopItems.get(position)
 
-        val key = item.key
-        val value = item.value
+        holder.itemName.text = "${item.name}"
+        holder.description.text = "${item.description}"
+        holder.cost.text = "${item.cost}"
 
-        holder.itemName.text = key
-        holder.description.text = "COMING SOON"
-        holder.cost.text = "COMING SOON"
-
-        if(!value)
+        if(!item.bought || item.cost > userCurrency)
             holder.itemView.isClickable = false
 
         holder.itemView.setOnClickListener {
-
+            selectListener(item, false)
         }
     }
 

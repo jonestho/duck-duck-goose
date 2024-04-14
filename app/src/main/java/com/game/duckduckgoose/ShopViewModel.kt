@@ -8,9 +8,9 @@ class ShopViewModel: ViewModel() {
     private val _updateShop = MutableLiveData<Boolean>(false)
     val updateShop get(): LiveData<Boolean> = _updateShop
 
-    var shopItems: HashMap<String, Boolean>? = hashMapOf()
+    var shopItems: ArrayList<Item>? = ArrayList<Item>()
     var currencyAmount: Int = 0
-    fun loadData(items: HashMap<String, Boolean>?, currency: Int){
+    fun loadData(items: ArrayList<Item>, currency: Int){
         shopItems = items
         currencyAmount = currency
     }
