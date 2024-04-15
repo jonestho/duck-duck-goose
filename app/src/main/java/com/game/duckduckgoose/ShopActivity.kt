@@ -32,7 +32,8 @@ class ShopActivity : AppCompatActivity() {
 
         val data: ArrayList<Item> = arrayListOf(Item("Coffee",
             "Short and instant speed boost!", 10),
-            Item("Fun Dip", "Long and gradual speed boost!", 15))
+            Item("Fun Dip", "Long and gradual speed boost!", 15),
+            Item("Bread Basket", "Attracts more geese!", 20))
         val currencyAmount = 50
 
         // TODO: Add the following later for the two variables above: intent.getParcelable(?)("name_here")
