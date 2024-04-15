@@ -1,5 +1,6 @@
 package com.game.duckduckgoose
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ShopAdapter(val shopItems: ArrayList<Item>, val userCurrency: Int,
                   val selectListener: (Item, Boolean)-> Unit):
     RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
-    private var selectedPos = RecyclerView.NO_POSITION
+    var selectedPos = RecyclerView.NO_POSITION
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val itemName: TextView
@@ -32,19 +33,24 @@ class ShopAdapter(val shopItems: ArrayList<Item>, val userCurrency: Int,
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.itemView.isSelected = selectedPos == position
         val item = shopItems.get(position)
 
         holder.itemName.text = "${item.name}"
         holder.description.text = "${item.description}"
-        holder.cost.text = "${item.cost}"
+        holder.cost.text = "Cost: ${item.cost}"
+
+        holder.itemView.setBackgroundResource(if(position == selectedPos)
+            R.color.colorEnabledBackground  else androidx.browser.R.color.browser_actions_bg_grey)
 
         if(!item.bought || item.cost > userCurrency)
             holder.itemView.isClickable = false
 
         holder.itemView.setOnClickListener {
-            selectListener(item, false)
+            selectedPos = position
+            notifyDataSetChanged()
+            selectListener(item, true)
         }
     }
 

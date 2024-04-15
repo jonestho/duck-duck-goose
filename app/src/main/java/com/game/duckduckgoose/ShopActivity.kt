@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 
 class ShopActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
@@ -24,7 +25,9 @@ class ShopActivity : AppCompatActivity() {
             insets
         }
 
-        val data: ArrayList<Item> = arrayListOf(Item("Goose", "Goose", 3))
+        val data: ArrayList<Item> = arrayListOf(Item("Coffee",
+            "Short and instant speed boost!", 10),
+            Item("Fun Dip", "Long and gradual speed boost!", 15))
         val currencyAmount = 50
 
         // TODO: Add the following later for the two variables above: intent.getParcelable(?)("name_here")
@@ -49,11 +52,24 @@ class ShopActivity : AppCompatActivity() {
 
         // TODO: Define onClickListeners
         doneBtn.setOnClickListener{
-
+            // TODO: Implement bidirectional
+            finish()
         }
 
         buyBtn.setOnClickListener{
+            val shopAdapter = recyclerView.adapter as? ShopAdapter
 
+            if(shopAdapter?.selectedPos != RecyclerView.NO_POSITION){
+                val selectedItem = shopAdapter?.shopItems?.get(shopAdapter.selectedPos)
+
+                if(selectedItem?.cost!! > currencyAmount){
+                    Snackbar.make(doneBtn, "Error: You do not have enough money to buy this.",
+                        Snackbar.LENGTH_LONG).show()
+                }
+            } else {
+                Snackbar.make(doneBtn, "Error: Please select an item to buy.",
+                    Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 }

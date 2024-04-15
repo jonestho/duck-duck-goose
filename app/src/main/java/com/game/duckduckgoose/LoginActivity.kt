@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
 
         myViewModel.userID.observe(this){
             if (it != null && myViewModel.isInitialized) {
-                val toMain = Intent(this, MainActivity::class.java)
+                val toMain = Intent(this, ShopActivity::class.java)
                 toMain.putExtra("uid", myViewModel.userID.value)
 
                 startActivity(toMain)
@@ -76,9 +76,6 @@ class LoginActivity : AppCompatActivity() {
 
         loginBtn.setOnClickListener{
             myViewModel.doLogin(email.text.toString(), password.text.toString())
-
-            val toShop = Intent(this, ShopActivity::class.java)
-            startActivity(toShop)
         }
 
         registerBtn.setOnClickListener{
