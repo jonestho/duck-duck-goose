@@ -13,7 +13,7 @@ class GameMusicService: Service() {
 
         musicPlayer = MediaPlayer.create(this, R.raw.game_music)
         musicPlayer.isLooping = true
-        musicPlayer.setVolume(1f, 1f)
+        musicPlayer.setVolume(100f, 100f)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
