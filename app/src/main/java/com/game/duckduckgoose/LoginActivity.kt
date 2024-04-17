@@ -28,6 +28,9 @@ class LoginActivity : AppCompatActivity() {
 
         myViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
+        if(!myViewModel.isInitialized)
+            MediaPlayer.create(this, R.raw.game_music).start()
+
         val loginBtn = findViewById<Button>(R.id.login_button)
         val registerBtn = findViewById<Button>(R.id.register_button)
 

@@ -1,11 +1,9 @@
 package com.game.duckduckgoose
 
-import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 
 class ShopViewModel: ViewModel() {
     val _updateShop = MutableLiveData<Boolean>(false)
