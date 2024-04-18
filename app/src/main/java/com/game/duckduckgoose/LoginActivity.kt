@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
         myViewModel.userID.observe(this){
             if (it != null && myViewModel.isInitialized) {
-                val toMain = Intent(this, ShopActivity::class.java)
+                val toMain = Intent(this, MainActivity::class.java)
                 toMain.putExtra("uid", myViewModel.userID.value)
 
                 startActivity(toMain)
@@ -84,11 +84,11 @@ class LoginActivity : AppCompatActivity() {
 
         registerBtn.setOnClickListener{
             // TODO: Uncomment code below when done testing shop
-            val toShop = Intent(this, ShopActivity::class.java)
-            startActivity(toShop)
+//            val toShop = Intent(this, ShopActivity::class.java)
+//            startActivity(toShop)
 
-            /* val toRegister = Intent(this, NewAccountActivity::class.java)
-            startActivity(toRegister) */
+            val toRegister = Intent(this, NewAccountActivity::class.java)
+            startActivity(toRegister)
         }
     }
 }
