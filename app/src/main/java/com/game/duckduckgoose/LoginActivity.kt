@@ -83,10 +83,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         registerBtn.setOnClickListener{
-            // TODO: Uncomment code below when done testing shop
-//            val toShop = Intent(this, ShopActivity::class.java)
-//            startActivity(toShop)
-
             val toRegister = Intent(this, NewAccountActivity::class.java)
             startActivity(toRegister)
         }

@@ -3,6 +3,7 @@ package com.game.duckduckgoose
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -40,6 +41,9 @@ class MainActivity : AppCompatActivity() {
 
         // bird image
         val birdImage = findViewById<ImageView>(R.id.birdImage)
+
+        // honk sound
+        val honk = MediaPlayer.create(this, R.raw.honk_sound)
 
         // buttons
         val quitBtn = findViewById<Button>(R.id.quitBtn)
@@ -91,6 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         // buttons
         honkBtn.setOnClickListener {
+            honk.start()
             myViewModel.addClicks()
         }
 

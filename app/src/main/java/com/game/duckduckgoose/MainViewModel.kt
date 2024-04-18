@@ -33,8 +33,9 @@ class MainViewModel: ViewModel() {
     val clickIncrement: LiveData<Int> get() = _clickIncrement
     val idleClickers: LiveData<Int> get() = _idleClickers
 
-    // list of items bought
-    var itemsBought = mutableListOf<String>()
+    // Items Bought
+    var currentItems: HashMap<String, Int> = hashMapOf("Coffee" to 0, "Fun Dip" to 0,
+                                                         "Bread Basket" to 0, "Farmers" to 0)
 
     // firebase vars
     private val db = Firebase.firestore
