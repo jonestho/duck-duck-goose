@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +34,7 @@ class MainViewModel: ViewModel() {
     val idleClickers: LiveData<Int> get() = _idleClickers
 
     // list of items bought
-    var itemsBought: ArrayList<Item> = ArrayList<Item>()
+    var itemsBought = mutableListOf<String>()
 
     // firebase vars
     private val db = Firebase.firestore
@@ -54,6 +55,34 @@ class MainViewModel: ViewModel() {
                 }
         }
         print("USERNAME: $gooseName\n")
+    }
+
+    fun loadStats(){
+        viewModelScope.launch(Dispatchers.IO) {
+            db.collection("accounts/${uid}/stats")
+                .document("farmers")
+                .get()
+                .addOnSuccessListener { document ->
+                    _idleClickers.value = document.data!!["farmers"].toString().toInt()
+                }
+
+            db.collection("accounts/${uid}/stats")
+                .document("totalHonks")
+                .get()
+                .addOnSuccessListener { document ->
+                    _totalClicks.value = document.data!!["honks"].toString().toInt()
+                }
+
+            db.collection("accounts/${uid}/stats")
+                .document("honkIncrement")
+                .get()
+                .addOnSuccessListener { document ->
+                    _clickIncrement.value = document.data!!["inc"].toString().toInt()
+                }
+        }
+        print("TOTAL FARMERS: $idleClickers\n")
+        print("TOTAL HONKS: $totalClicks\n")
+        print("HONK INCREMENT: $clickIncrement\n")
     }
 
     // game logic

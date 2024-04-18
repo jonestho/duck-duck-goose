@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,9 +20,7 @@ class MainActivity : AppCompatActivity() {
     // two-way navigation with shop activity
     private val prefLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == Activity.RESULT_OK){
-            //val newItems = it.data!!.get
-
-            //myViewModel.updateItems(updatedMin, updatedMax)
+            // TODO: receive intent and update vals depending on items bought
         }
     }
 
@@ -38,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
 //            insets
 //        }
+
+        // bird image
+        val birdImage = findViewById<ImageView>(R.id.birdImage)
 
         // buttons
         val quitBtn = findViewById<Button>(R.id.quitBtn)
@@ -72,6 +74,19 @@ class MainActivity : AppCompatActivity() {
         myViewModel.clickIncrement.observe(this){
             val iCount = it.toString()
             honkInc.text = "$iCount"
+
+            // update bird type depending on honk increment
+            if (myViewModel.clickIncrement.value!! <= 3) {
+                birdImage.setImageResource(R.drawable.duckling)
+            } else if (myViewModel.clickIncrement.value!! <= 5) {
+                birdImage.setImageResource(R.drawable.duck)
+            } else if (myViewModel.clickIncrement.value!! <= 7) {
+                birdImage.setImageResource(R.drawable.goose1)
+            } else if (myViewModel.clickIncrement.value!! <= 9) {
+                birdImage.setImageResource(R.drawable.goose2)
+            } else {
+                birdImage.setImageResource(R.drawable.goose3)
+            }
         }
 
         // buttons
@@ -81,6 +96,7 @@ class MainActivity : AppCompatActivity() {
 
         shopBtn.setOnClickListener {
             val toPreferences = Intent(this, ShopActivity::class.java)
+            toPreferences.putExtra("honks", myViewModel.totalClicks.value)
 
             prefLauncher.launch(toPreferences)
         }

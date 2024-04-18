@@ -21,6 +21,11 @@ class NewAccountViewModel: ViewModel() {
     val isCreated: LiveData<Boolean> get() = _isCreated
     var isInitialized: Boolean = false
 
+    // default firebase vals
+    val tempFarmers = hashMapOf("farmers" to 0)
+    val tempHonks = hashMapOf("honks" to 0)
+    val tempIncrement = hashMapOf("inc" to 1)
+
     fun doSignUp(email: String, password: String){
         viewModelScope.launch(Dispatchers.IO) {
             auth.createUserWithEmailAndPassword(email, password)
@@ -38,7 +43,11 @@ class NewAccountViewModel: ViewModel() {
     private fun createNewUser(tempName: HashMap<String, String>){
         db.collection("accounts").document(auth.uid!!).set({val test = "test"})
         db.collection("accounts/${auth.uid!!}/stats")
-            .document("test").set({val test = "test"})
+            .document("farmers").set(tempFarmers)
+        db.collection("accounts/${auth.uid!!}/stats")
+            .document("totalHonks").set(tempHonks)
+        db.collection("accounts/${auth.uid!!}/stats")
+            .document("honkIncrement").set(tempIncrement)
         db.collection("accounts/${auth.uid!!}/username")
             .document("name").set(tempName)
     }
