@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         // observers
         myViewModel.gooseName.observe(this) {
             val name = it.toString()
-            gooseName.text = name
+            gooseName.text = "${name}'s Total Honks: "
         }
 
         myViewModel.totalClicks.observe(this){
