@@ -19,11 +19,13 @@ class ShopAdapter(val shopItems: ArrayList<Item>, val userCurrency: Int,
         val itemName: TextView
         val description: TextView
         val cost: TextView
+        val itemPic: ImageView
 
         init {
             itemName = view.findViewById(R.id.item_name)
             description = view.findViewById(R.id.item_desc)
             cost = view.findViewById(R.id.item_cost)
+            itemPic = view.findViewById(R.id.shop_item_image)
         }
     }
 
@@ -43,6 +45,13 @@ class ShopAdapter(val shopItems: ArrayList<Item>, val userCurrency: Int,
 
         holder.itemView.setBackgroundResource(if(position == selectedPos)
             R.color.colorEnabledBackground  else androidx.browser.R.color.browser_actions_bg_grey)
+
+        // set shop item images
+        when(item.name){
+            "Coffee" -> holder.itemPic.setImageResource(R.drawable.coffee)
+            "Fun Dip" -> holder.itemPic.setImageResource(R.drawable.fundip)
+            "Farmer" -> holder.itemPic.setImageResource(R.drawable.farmers)
+        }
 
         if(!item.bought || item.cost > userCurrency)
             holder.itemView.isClickable = false

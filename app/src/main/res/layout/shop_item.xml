@@ -16,13 +16,16 @@
         android:layout_height="67dp">
 
         <ImageView
-            android:id="@+id/guess_symbol"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:id="@+id/shop_item_image"
+            android:layout_width="59dp"
+            android:layout_height="62dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@android:drawable/btn_star" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -30,13 +33,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.18" />
+            app:layout_constraintGuide_percent="0.20588236" />
 
         <TextView
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:text="TextView"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/guideline8"
