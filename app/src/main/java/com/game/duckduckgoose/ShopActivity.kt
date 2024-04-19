@@ -1,6 +1,7 @@
 package com.game.duckduckgoose
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -16,7 +17,6 @@ import com.google.android.material.snackbar.Snackbar
 class ShopActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var myViewModel: ShopViewModel
-    var boughtItems: ArrayList<Item> = arrayListOf()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,17 +30,17 @@ class ShopActivity : AppCompatActivity() {
         }
 
         val data: ArrayList<Item> = arrayListOf(Item("Coffee",
-            "Short and instant speed boost!", 10),
-            Item("Fun Dip", "Long and gradual speed boost!", 15),
-            Item("Farmer", "Attracts more geese!", 20))
+            "Increase the Honks per click by one!", 100),
+            Item("Fun Dip", "Increase the Honks per click by five! ", 200),
+            Item("Farmer", "Have the geese work when idle!", 300))
 
-        val currencyAmount = 50
-
-        // TODO: Add the following later for the two variables above: intent.getParcelable(?)("name_here")
+        var honks = intent.getIntExtra("honks", 0)
+        var increments = 0
+        var idles = 0
 
         recyclerView = findViewById<RecyclerView>(R.id.shop_items)
         myViewModel = ViewModelProvider(this).get(ShopViewModel::class.java)
-        myViewModel.loadData(data, currencyAmount)
+        myViewModel.loadData(data, honks)
 
         recyclerView.adapter =
             ShopAdapter(myViewModel.shopItems!!, myViewModel.currencyAmount)
@@ -58,7 +58,13 @@ class ShopActivity : AppCompatActivity() {
         val buyBtn = findViewById<Button>(R.id.buy_item)
 
         doneBtn.setOnClickListener{
-            // TODO: Implement return items bought back to game via. intent.
+            val backIntent = Intent()
+
+            backIntent.putExtra("honks", honks)
+            backIntent.putExtra("inc", increments)
+            backIntent.putExtra("idle", idles)
+
+            setResult(RESULT_OK, backIntent)
             finish()
         }
 
@@ -78,7 +84,13 @@ class ShopActivity : AppCompatActivity() {
                     val shopAdapter = recyclerView.adapter as? ShopAdapter
                     val selectedItem = shopAdapter?.shopItems?.get(shopAdapter.selectedPos)
 
-                    boughtItems.add(selectedItem!!)
+                    when(selectedItem!!.name){
+                        "Coffee" -> increments += 1
+                        "Fun Dip" -> increments += 5
+                        "Farmer" -> idles += 1
+                    }
+
+                    myViewModel.currencyAmount -= selectedItem.cost
                     myViewModel._updateShop.value = true
                 }
             }

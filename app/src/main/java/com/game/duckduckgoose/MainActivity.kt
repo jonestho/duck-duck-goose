@@ -21,7 +21,11 @@ class MainActivity : AppCompatActivity() {
     // two-way navigation with shop activity
     private val prefLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == Activity.RESULT_OK){
-            // TODO: receive intent and update vals depending on items bought
+            val updatedHonks = it.data!!.getIntExtra("honks", 0)
+            val updatedInc = it.data!!.getIntExtra("inc", 0)
+            val updatedIdle = it.data!!.getIntExtra("idle", 0)
+
+            myViewModel.updateFromShop(updatedHonks, updatedInc, updatedIdle)
         }
     }
 
