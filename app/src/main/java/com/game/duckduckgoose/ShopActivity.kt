@@ -16,7 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 class ShopActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var myViewModel: ShopViewModel
-    var initialized = false
     var boughtItems: ArrayList<Item> = arrayListOf()
 
     @SuppressLint("SetTextI18n")
@@ -33,7 +32,7 @@ class ShopActivity : AppCompatActivity() {
         val data: ArrayList<Item> = arrayListOf(Item("Coffee",
             "Short and instant speed boost!", 10),
             Item("Fun Dip", "Long and gradual speed boost!", 15),
-            Item("Bread Basket", "Attracts more geese!", 20))
+            Item("Farmer", "Attracts more geese!", 20))
 
         val currencyAmount = 50
 
@@ -51,10 +50,8 @@ class ShopActivity : AppCompatActivity() {
 
         myViewModel.updateShop.observe(this){
             val currencyField = findViewById<TextView>(R.id.current_amnt)
-            currencyField.text = "Your Points: ${myViewModel.currencyAmount}"
+            currencyField.text = "Total Honks: ${myViewModel.currencyAmount}"
         }
-
-        initialized = true
 
         // buttons
         val doneBtn = findViewById<Button>(R.id.to_main)

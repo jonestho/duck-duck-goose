@@ -22,9 +22,11 @@ class NewAccountViewModel: ViewModel() {
     var isInitialized: Boolean = false
 
     // default firebase vals
+
     val tempFarmers = hashMapOf("farmers" to 0)
     val tempHonks = hashMapOf("honks" to 0)
     val tempIncrement = hashMapOf("inc" to 1)
+    val tempItems = hashMapOf("items" to arrayOf(0, 0, 0))
 
     fun doSignUp(email: String, password: String){
         viewModelScope.launch(Dispatchers.IO) {
@@ -48,6 +50,8 @@ class NewAccountViewModel: ViewModel() {
             .document("totalHonks").set(tempHonks)
         db.collection("accounts/${auth.uid!!}/stats")
             .document("honkIncrement").set(tempIncrement)
+        db.collection("accounts/${auth.uid!!}/stats")
+            .document("items").set(tempItems)
         db.collection("accounts/${auth.uid!!}/username")
             .document("name").set(tempName)
     }
