@@ -1,6 +1,7 @@
 package com.game.duckduckgoose
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -16,8 +17,6 @@ import com.google.android.material.snackbar.Snackbar
 class ShopActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var myViewModel: ShopViewModel
-    var initialized = false
-    var boughtItems: ArrayList<Item> = arrayListOf()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,18 +29,19 @@ class ShopActivity : AppCompatActivity() {
             insets
         }
 
+        myViewModel = ViewModelProvider(this).get(ShopViewModel::class.java)
+
         val data: ArrayList<Item> = arrayListOf(Item("Coffee",
-            "Short and instant speed boost!", 10),
-            Item("Fun Dip", "Long and gradual speed boost!", 15),
-            Item("Bread Basket", "Attracts more geese!", 20))
+            "Increase the Honks per click by one!", 100),
+            Item("Fun Dip", "Increase the Honks per click by five! ", 200),
+            Item("Farmer", "Have the geese work when idle!", 300))
 
-        val currencyAmount = 50
-
-        // TODO: Add the following later for the two variables above: intent.getParcelable(?)("name_here")
+        myViewModel.currencyAmount = intent.getIntExtra("honks", 0)
+        var increments = 0
+        var idles = 0
 
         recyclerView = findViewById<RecyclerView>(R.id.shop_items)
-        myViewModel = ViewModelProvider(this).get(ShopViewModel::class.java)
-        myViewModel.loadData(data, currencyAmount)
+        myViewModel.loadData(data, myViewModel.currencyAmount)
 
         recyclerView.adapter =
             ShopAdapter(myViewModel.shopItems!!, myViewModel.currencyAmount)
@@ -51,17 +51,21 @@ class ShopActivity : AppCompatActivity() {
 
         myViewModel.updateShop.observe(this){
             val currencyField = findViewById<TextView>(R.id.current_amnt)
-            currencyField.text = "Your Points: ${myViewModel.currencyAmount}"
+            currencyField.text = "Total Honks: ${myViewModel.currencyAmount}"
         }
-
-        initialized = true
 
         // buttons
         val doneBtn = findViewById<Button>(R.id.to_main)
         val buyBtn = findViewById<Button>(R.id.buy_item)
 
         doneBtn.setOnClickListener{
-            // TODO: Implement return items bought back to game via. intent.
+            val backIntent = Intent()
+
+            backIntent.putExtra("honks", myViewModel.currencyAmount)
+            backIntent.putExtra("inc", increments)
+            backIntent.putExtra("idle", idles)
+
+            setResult(RESULT_OK, backIntent)
             finish()
         }
 
@@ -81,7 +85,12 @@ class ShopActivity : AppCompatActivity() {
                     val shopAdapter = recyclerView.adapter as? ShopAdapter
                     val selectedItem = shopAdapter?.shopItems?.get(shopAdapter.selectedPos)
 
-                    boughtItems.add(selectedItem!!)
+                    when(selectedItem!!.name){
+                        "Coffee" -> increments += 1
+                        "Fun Dip" -> increments += 5
+                        "Farmer" -> idles += 1
+                    }
+
                     myViewModel._updateShop.value = true
                 }
             }

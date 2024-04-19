@@ -22,6 +22,7 @@ class NewAccountViewModel: ViewModel() {
     var isInitialized: Boolean = false
 
     // default firebase vals
+
     val tempFarmers = hashMapOf("farmers" to 0)
     val tempHonks = hashMapOf("honks" to 0)
     val tempIncrement = hashMapOf("inc" to 1)

@@ -33,9 +33,6 @@ class MainViewModel: ViewModel() {
     val clickIncrement: LiveData<Int> get() = _clickIncrement
     val idleClickers: LiveData<Int> get() = _idleClickers
 
-    // list of items bought
-    var itemsBought = mutableListOf<String>()
-
     // firebase vars
     private val db = Firebase.firestore
     private var uid: String = ""
@@ -88,5 +85,11 @@ class MainViewModel: ViewModel() {
     // game logic
     fun addClicks() {
         _totalClicks.value = _clickIncrement.value?.let { _totalClicks.value?.plus(it) }
+    }
+
+    fun updateFromShop(honks: Int, inc: Int, idle: Int) {
+        _totalClicks.value = honks
+        _clickIncrement.value = _clickIncrement.value?.plus(inc)
+        _idleClickers.value = _idleClickers.value?.plus(idle)
     }
 }

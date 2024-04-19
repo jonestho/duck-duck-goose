@@ -3,6 +3,7 @@ package com.game.duckduckgoose
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -20,7 +21,11 @@ class MainActivity : AppCompatActivity() {
     // two-way navigation with shop activity
     private val prefLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == Activity.RESULT_OK){
-            // TODO: receive intent and update vals depending on items bought
+            val updatedHonks = it.data!!.getIntExtra("honks", 0)
+            val updatedInc = it.data!!.getIntExtra("inc", 0)
+            val updatedIdle = it.data!!.getIntExtra("idle", 0)
+
+            myViewModel.updateFromShop(updatedHonks, updatedInc, updatedIdle)
         }
     }
 
@@ -40,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         // bird image
         val birdImage = findViewById<ImageView>(R.id.birdImage)
+
+        // honk sound
+        val honk = MediaPlayer.create(this, R.raw.honk_sound)
 
         // buttons
         val quitBtn = findViewById<Button>(R.id.quitBtn)
@@ -91,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         // buttons
         honkBtn.setOnClickListener {
+            honk.start()
             myViewModel.addClicks()
         }
 
