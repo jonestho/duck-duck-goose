@@ -29,18 +29,19 @@ class ShopActivity : AppCompatActivity() {
             insets
         }
 
+        myViewModel = ViewModelProvider(this).get(ShopViewModel::class.java)
+
         val data: ArrayList<Item> = arrayListOf(Item("Coffee",
             "Increase the Honks per click by one!", 100),
             Item("Fun Dip", "Increase the Honks per click by five! ", 200),
             Item("Farmer", "Have the geese work when idle!", 300))
 
-        var honks = intent.getIntExtra("honks", 0)
+        myViewModel.currencyAmount = intent.getIntExtra("honks", 0)
         var increments = 0
         var idles = 0
 
         recyclerView = findViewById<RecyclerView>(R.id.shop_items)
-        myViewModel = ViewModelProvider(this).get(ShopViewModel::class.java)
-        myViewModel.loadData(data, honks)
+        myViewModel.loadData(data, myViewModel.currencyAmount)
 
         recyclerView.adapter =
             ShopAdapter(myViewModel.shopItems!!, myViewModel.currencyAmount)
@@ -60,7 +61,7 @@ class ShopActivity : AppCompatActivity() {
         doneBtn.setOnClickListener{
             val backIntent = Intent()
 
-            backIntent.putExtra("honks", honks)
+            backIntent.putExtra("honks", myViewModel.currencyAmount)
             backIntent.putExtra("inc", increments)
             backIntent.putExtra("idle", idles)
 
@@ -90,7 +91,6 @@ class ShopActivity : AppCompatActivity() {
                         "Farmer" -> idles += 1
                     }
 
-                    myViewModel.currencyAmount -= selectedItem.cost
                     myViewModel._updateShop.value = true
                 }
             }
