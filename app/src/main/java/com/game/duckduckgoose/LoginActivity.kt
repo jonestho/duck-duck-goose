@@ -42,9 +42,9 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(email.text.isNotEmpty() && password.text.isNotEmpty()){
-                    loginBtn.isEnabled = true;
+                    loginBtn.isEnabled = true
                 }else{
-                    loginBtn.isEnabled = false;
+                    loginBtn.isEnabled = false
                 }
             }
 

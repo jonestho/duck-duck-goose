@@ -29,10 +29,10 @@ class NewAccountActivity : AppCompatActivity() {
         val cancelBtn = findViewById<Button>(R.id.cancel_button)
         val createBtn = findViewById<Button>(R.id.create_button)
 
-        val usernameBtn = findViewById<EditText>(R.id.username)
-        val emailBtn = findViewById<EditText>(R.id.email_address)
-        val actualPasswordBtn = findViewById<EditText>(R.id.password)
-        val passwordBtn = findViewById<EditText>(R.id.verified_password)
+        val username = findViewById<EditText>(R.id.username)
+        val email = findViewById<EditText>(R.id.email_address)
+        val actualPassword = findViewById<EditText>(R.id.password)
+        val password = findViewById<EditText>(R.id.verified_password)
 
         myViewModel.isCreated.observe(this){
             if (myViewModel.isCreated.value!!) {
@@ -44,45 +44,45 @@ class NewAccountActivity : AppCompatActivity() {
             } else
                 if(!myViewModel.isCreated.value!!)
                     Snackbar.make(
-                        usernameBtn, "Error: A server error has occurred.",
+                        username, "Error: A server error has occurred.",
                         Snackbar.LENGTH_LONG
                     ).show()
         }
 
         myViewModel.account.observe(this){
             if (it && myViewModel.isInitialized) {
-                myViewModel.createNewUserDoc(usernameBtn.text.toString())
+                myViewModel.createNewUserDoc(username.text.toString())
             } else {
                 if(myViewModel.isInitialized)
                     Snackbar.make(
-                        usernameBtn, "Error: Account could not be created.",
+                        username, "Error: Account could not be created.",
                         Snackbar.LENGTH_LONG
                     ).show()
             }
         }
 
         createBtn.setOnClickListener{
-            if(actualPasswordBtn.text.toString() != passwordBtn.text.toString())
+            if(actualPassword.text.toString() != password.text.toString())
                 Snackbar.make(
-                    passwordBtn, "Error: Passwords do not match.",
+                    password, "Error: Passwords do not match.",
                     Snackbar.LENGTH_LONG
                 ).show()
-            else if(actualPasswordBtn.text.toString().isEmpty() &&
-                passwordBtn.text.toString().isEmpty())
+            else if(actualPassword.text.toString().isEmpty() &&
+                password.text.toString().isEmpty())
                 Snackbar.make(
-                    passwordBtn, "Error: Please enter a password.",
+                    password, "Error: Please enter a password.",
                     Snackbar.LENGTH_LONG
                 ).show()
-            else if(emailBtn.text.toString().isEmpty())
+            else if(email.text.toString().isEmpty())
                 Snackbar.make(
-                    passwordBtn, "Error: Please enter an email address.",
+                    password, "Error: Please enter an email address.",
                     Snackbar.LENGTH_LONG
                 ).show()
-            else if(usernameBtn.text.toString().isEmpty())
-                Snackbar.make(usernameBtn, "Error: Please enter a nickname.",
+            else if(username.text.toString().isEmpty())
+                Snackbar.make(username, "Error: Please enter a nickname.",
                     Snackbar.LENGTH_LONG).show()
             else
-                myViewModel.doSignUp(emailBtn.text.toString(), passwordBtn.text.toString())
+                myViewModel.doSignUp(email.text.toString(), password.text.toString())
         }
 
         cancelBtn.setOnClickListener {

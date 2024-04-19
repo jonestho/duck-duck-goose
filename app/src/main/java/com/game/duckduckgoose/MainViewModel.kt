@@ -11,6 +11,8 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
+import java.util.Timer
+import java.util.TimerTask
 
 @Parcelize
 data class Item(
@@ -19,6 +21,7 @@ data class Item(
     val cost: Int = 0,
     var bought: Boolean = false
 ): Parcelable
+
 
 class MainViewModel: ViewModel() {
     // mutable data
@@ -83,9 +86,14 @@ class MainViewModel: ViewModel() {
     }
 
     fun saveStats(){
-        db.collection("accounts/${uid}/stats").document("farmers").update("farmers", _idleClickers.value)
-        db.collection("accounts/${uid}/stats").document("totalHonks").update("honks", _totalClicks.value)
-        db.collection("accounts/${uid}/stats").document("honkIncrement").update("inc", _clickIncrement.value)
+        viewModelScope.launch(Dispatchers.IO) {
+            db.collection("accounts/${uid}/stats").document("farmers")
+                .update("farmers", _idleClickers.value)
+            db.collection("accounts/${uid}/stats").document("totalHonks")
+                .update("honks", _totalClicks.value)
+            db.collection("accounts/${uid}/stats").document("honkIncrement")
+                .update("inc", _clickIncrement.value)
+        }
 
     }
 
@@ -98,5 +106,17 @@ class MainViewModel: ViewModel() {
         _totalClicks.value = honks
         _clickIncrement.value = _clickIncrement.value?.plus(inc)
         _idleClickers.value = _idleClickers.value?.plus(idle)
+    }
+
+    fun idleClicks(){
+        val timer = Timer()
+        viewModelScope.launch(Dispatchers.IO) {
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    _totalClicks.postValue(_idleClickers.value?.let { _totalClicks.value?.plus(it) })
+                }
+            }, 0, 1000)
+        }
+
     }
 }
