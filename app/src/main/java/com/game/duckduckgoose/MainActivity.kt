@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         myViewModel.setUID(intent.getStringExtra("uid")!!)
         myViewModel.loadUsername()
+        myViewModel.loadStats()
 
         // observers
         myViewModel.gooseName.observe(this) {

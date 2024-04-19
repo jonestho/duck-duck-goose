@@ -83,9 +83,14 @@ class MainViewModel: ViewModel() {
     }
 
     fun saveStats(){
-        db.collection("accounts/${uid}/stats").document("farmers").update("farmers", _idleClickers.value)
-        db.collection("accounts/${uid}/stats").document("totalHonks").update("honks", _totalClicks.value)
-        db.collection("accounts/${uid}/stats").document("honkIncrement").update("inc", _clickIncrement.value)
+        viewModelScope.launch(Dispatchers.IO) {
+            db.collection("accounts/${uid}/stats").document("farmers")
+                .update("farmers", _idleClickers.value)
+            db.collection("accounts/${uid}/stats").document("totalHonks")
+                .update("honks", _totalClicks.value)
+            db.collection("accounts/${uid}/stats").document("honkIncrement")
+                .update("inc", _clickIncrement.value)
+        }
 
     }
 
