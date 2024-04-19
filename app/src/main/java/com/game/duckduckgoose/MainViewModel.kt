@@ -82,6 +82,13 @@ class MainViewModel: ViewModel() {
         print("HONK INCREMENT: $clickIncrement\n")
     }
 
+    fun saveStats(){
+        db.collection("accounts/${uid}/stats").document("farmers").update("farmers", _idleClickers.value)
+        db.collection("accounts/${uid}/stats").document("totalHonks").update("honks", _totalClicks.value)
+        db.collection("accounts/${uid}/stats").document("honkIncrement").update("inc", _clickIncrement.value)
+
+    }
+
     // game logic
     fun addClicks() {
         _totalClicks.value = _clickIncrement.value?.let { _totalClicks.value?.plus(it) }
