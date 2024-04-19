@@ -11,6 +11,7 @@ class ShopViewModel: ViewModel() {
 
     var shopItems: ArrayList<Item>? = ArrayList()
     var currencyAmount: Int = 0
+
     fun loadData(items: ArrayList<Item>, currency: Int){
         shopItems = items
         currencyAmount = currency
