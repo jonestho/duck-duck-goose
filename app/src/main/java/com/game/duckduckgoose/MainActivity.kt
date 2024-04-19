@@ -113,5 +113,11 @@ class MainActivity : AppCompatActivity() {
         quitBtn.setOnClickListener {
             finish()
         }
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        myViewModel.saveStats()
     }
 }
