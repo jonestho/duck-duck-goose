@@ -80,9 +80,9 @@ class MainViewModel: ViewModel() {
                     _clickIncrement.value = document.data!!["inc"].toString().toInt()
                 }
         }
-        print("TOTAL FARMERS: $idleClickers\n")
-        print("TOTAL HONKS: $totalClicks\n")
-        print("HONK INCREMENT: $clickIncrement\n")
+        print("TOTAL FARMERS: ${idleClickers.value}\n")
+        print("TOTAL HONKS: ${totalClicks.value}\n")
+        print("HONK INCREMENT: ${clickIncrement.value}\n")
     }
 
     fun saveStats(){
@@ -94,7 +94,6 @@ class MainViewModel: ViewModel() {
             db.collection("accounts/${uid}/stats").document("honkIncrement")
                 .update("inc", _clickIncrement.value)
         }
-
     }
 
     // game logic
@@ -113,10 +112,9 @@ class MainViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             timer.schedule(object : TimerTask() {
                 override fun run() {
-                    _totalClicks.postValue(_idleClickers.value?.let { _totalClicks.value?.plus(it) })
+                    _totalClicks.postValue(_idleClickers.value?.let { _totalClicks.value?.plus(it * _clickIncrement.value!!) })
                 }
             }, 0, 1000)
         }
-
     }
 }
