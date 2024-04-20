@@ -8,8 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-// TODO: Change String to Item type or whatever is defined.
-
 class ShopAdapter(val shopItems: ArrayList<Item>, val userCurrency: Int,
                   val selectListener: (Item, Boolean)-> Unit):
     RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
@@ -61,10 +59,6 @@ class ShopAdapter(val shopItems: ArrayList<Item>, val userCurrency: Int,
             notifyDataSetChanged()
             selectListener(item, true)
         }
-    }
-
-    fun markAsBought(){
-
     }
 
     override fun getItemCount(): Int = shopItems.size
